@@ -14,7 +14,31 @@ function setup() {
 }
 
 function draw() {
-  background(0);
+  background(0, 120, 0); // Cor de fundo como um campo de futebol
+  
+   // Desenha as marcações do campo
+  stroke(255);
+  strokeWeight(5);
+  noFill();
+
+  // Linhas laterais
+  line(width/2, 0, width/2, height);
+  line(0, 0, 0, height);
+  line(width, 0, width, height);
+
+  // Linhas de fundo
+  line(0, height, width, height);
+  line(0, 0, width, 0);
+
+  // Círculo central
+  ellipse(width/2, height/2, 100, 100);
+
+  // Ponto central
+  point(width/2, height/2);
+
+  // Retângulos das áreas
+  rect(0, height/2, 100, height/2);
+  rect(width-10, height/2, 60, height/2);
   
   textAlign(CENTER);
   textSize(32);
