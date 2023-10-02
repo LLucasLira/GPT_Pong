@@ -17,3 +17,8 @@ Melhoria:
 
 Melhoria:
 "Adicione um placar na parte de cima";
+
+Melhoria:
+"Altere a cor de fundo para as cores de um campo de futebol, além disso adicione as marcações que existem no campo".
+
+![image](https://github.com/LLucasLira/GPT_Pong/assets/84140628/0c88d221-c7b5-4cea-a47a-9e7f2faefc4b)
