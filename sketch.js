@@ -1,6 +1,9 @@
 let ball;
 let leftPaddle;
 let rightPaddle;
+let opponentPaddle;
+let playerScore = 0;
+let opponentScore = 0;
 
 function setup() {
   createCanvas(800, 600);
@@ -12,6 +15,11 @@ function setup() {
 
 function draw() {
   background(0);
+  
+  textAlign(CENTER);
+  textSize(32);
+  fill(255);
+  text(playerScore + " - " + opponentScore, width / 2, 50);
   
   ball.update();
   ball.display();
@@ -25,8 +33,25 @@ function draw() {
   opponentPaddle.update(ball);
   opponentPaddle.display();
   
+  // Verifica se a bola saiu pela esquerda (ponto para o adversário)
+  if (ball.position.x - ball.radius < 0) {
+    opponentScore++;
+    resetGame();
+  }
+
+  // Verifica se a bola saiu pela direita (ponto para o jogador)
+  if (ball.position.x + ball.radius > width) {
+    playerScore++;
+    resetGame();
+  }
+  
   ball.checkPaddleCollision(leftPaddle, rightPaddle, opponentPaddle);
   ball.checkEdges();
+}
+
+function resetGame() {
+  ball.position = createVector(width/2, height/2);
+  ball.velocity = createVector(random(2, 4), random(-2, 2));
 }
 
 class Ball {
@@ -45,23 +70,29 @@ class Ball {
     ellipse(this.position.x, this.position.y, this.radius*2, this.radius*2);
   }
   
-checkPaddleCollision(leftPaddle, rightPaddle, opponentPaddle) {
+   increaseSpeed() {
+    this.velocity.mult(1.1); // Aumenta a velocidade em 10%
+  }
+ checkPaddleCollision(leftPaddle, rightPaddle, opponentPaddle) {
     if (this.position.x - this.radius < leftPaddle.position.x + leftPaddle.width/2 &&
         this.position.y > leftPaddle.position.y - leftPaddle.height/2 &&
         this.position.y < leftPaddle.position.y + leftPaddle.height/2) {
       this.velocity.x *= -1;
+      this.increaseSpeed(); // Aumenta a velocidade
     }
     
     if (this.position.x + this.radius > rightPaddle.position.x - rightPaddle.width/2 &&
         this.position.y > rightPaddle.position.y - rightPaddle.height/2 &&
         this.position.y < rightPaddle.position.y + rightPaddle.height/2) {
       this.velocity.x *= -1;
+      this.increaseSpeed(); // Aumenta a velocidade
     }
     
     if (this.position.x + this.radius > opponentPaddle.position.x - opponentPaddle.width/2 &&
         this.position.y > opponentPaddle.position.y - opponentPaddle.height/2 &&
         this.position.y < opponentPaddle.position.y + opponentPaddle.height/2) {
       this.velocity.x *= -1;
+      this.increaseSpeed(); // Aumenta a velocidade
     }
   }
 
